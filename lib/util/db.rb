@@ -2,10 +2,8 @@ require 'ostruct'
 require 'json'
 class Db < OpenStruct
 
-  FILE_LOCATION = 'data/save.json'
-
   def self.load
-    JSON.parse(File.read(FILE_LOCATION), object_class: self)
+    JSON.parse(File.read("#{$settings.base_path}/data/save.json"), object_class: self)
   end
 
   def save(field, value)

@@ -19,7 +19,7 @@ class LogDownloader
         puts "Nothing new"
         return false
       end
-      File.open("data/log.json", "w") { |f| f.write log_raw.to_json }
+      File.open("#{$settings.base_path}/data/log.json", "w") { |f| f.write log_raw.to_json }
       return true
     else
       puts "Failed to download log"

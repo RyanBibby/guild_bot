@@ -26,8 +26,8 @@ require_relative 'lib/util/log_parser'
 
 class DoombotRunner
   def initialize
-    $db = Db.load
     $settings = Settings.load
+    $db = Db.load
   end
 
   def motd
@@ -42,7 +42,7 @@ class DoombotRunner
 
   def get_logs(since)
     if(LogDownloader.new($settings.guild_log_url, since).download)
-      return LogParser.new(File.read('./data/log.json'))
+      return LogParser.new(File.read("#{$settings.base_path}/data/log.json"))
     else
       puts "No action"
       exit
