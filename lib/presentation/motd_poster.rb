@@ -7,6 +7,7 @@ class MotdPoster
   end
 
   def post
+    return if logs.nil?
     log_to_post = logs.first
     DiscordPoster.new("_#{log_to_post.motd.strip}_ - #{log_to_post.user}").post
     $db.save("last_log_id", log_to_post.id)

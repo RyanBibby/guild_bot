@@ -1,3 +1,4 @@
+#!/usr/bin/ruby
 require 'ostruct'
 require 'json'
 require 'rubygems'
@@ -25,15 +26,23 @@ require_relative 'lib/util/log_parser'
 
 class DoombotRunner
   def initialize
-    $settings = Settings.load
     $db = Db.load
+    $settings = Settings.load
   end
 
-  def run
+  def motd
+    MotdPoster.new(get_logs.motd_logs).post
+  end
+
+  def treasury
+    TreasuryPoster.new(get_logs.treasury_logs).post
+  end
+
+  private 
+
+  def get_logs
     if(LogDownloader.new($settings.guild_log_url).download)
-      logs = LogParser.new(File.read('./data/log.json'))
-      MotdPoster.new(logs.motd_logs).post
-      TreasuryPoster.new(logs.treasury_logs).post
+      return LogParser.new(File.read('./data/log.json'))
     else
       puts "No action"
       exit
@@ -41,4 +50,6 @@ class DoombotRunner
   end
 end
 
-DoombotRunner.new.run
+if(['motd', 'treasury'].include?(ARGV[0]))
+  DoombotRunner.new.send(ARGV[0])
+end
