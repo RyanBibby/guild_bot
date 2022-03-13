@@ -9,7 +9,6 @@ class LogDownloader
 
   def download
     uri = URI(url + "since=#{since}")
-    puts uri
     res = Net::HTTP.get_response(uri)
 
     
