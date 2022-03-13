@@ -1,0 +1,6 @@
+{
+    "api_key": "NOT_A_REAL_KEY",
+    "guild_id": "NOT_A_REAL_ID",
+    "webhook_url": "https://example.com",
+    "live": false
+}  
