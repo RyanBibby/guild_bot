@@ -13,7 +13,6 @@ class LogDownloader
     if(res.code == '200') 
       puts "Downloaded log"
       log_raw = JSON.parse(res.body)
-      puts log_raw
       if(log_raw.empty?)
         puts "Nothing new"
         return false
