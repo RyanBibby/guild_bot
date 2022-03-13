@@ -31,17 +31,17 @@ class DoombotRunner
   end
 
   def motd
-    MotdPoster.new(get_logs.motd_logs).post
+    MotdPoster.new(get_logs($db.last_motd).motd_logs).post
   end
 
   def treasury
-    TreasuryPoster.new(get_logs.treasury_logs).post
+    TreasuryPoster.new(get_logs($db.last_treasury).treasury_logs).post
   end
 
   private 
 
-  def get_logs
-    if(LogDownloader.new($settings.guild_log_url).download)
+  def get_logs(since)
+    if(LogDownloader.new($settings.guild_log_url, since).download)
       return LogParser.new(File.read('./data/log.json'))
     else
       puts "No action"

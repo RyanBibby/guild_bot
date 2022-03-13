@@ -7,7 +7,7 @@ class Settings < OpenStruct
   end
 
   def guild_log_url
-    "https://api.guildwars2.com/v2/guild/#{guild_id}/log?access_token=#{api_key}&since=#{$db.last_log_id}"
+    "https://api.guildwars2.com/v2/guild/#{guild_id}/log?access_token=#{api_key}&"
   end
 
 end

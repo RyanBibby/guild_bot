@@ -10,7 +10,7 @@ class TreasuryPoster
     return if logs.nil?
     DiscordPoster.new(generate_summary).post
     $db.save("last_log_id", id_of_last_log)
-    $db.save("last_motd", id_of_last_log)
+    $db.save("last_treasury", id_of_last_log)
   end
 
   private

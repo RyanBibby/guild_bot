@@ -1,14 +1,17 @@
 class LogDownloader
 
-  attr_accessor :url
+  attr_accessor :url, :since
 
-  def initialize(url)
+  def initialize(url, since)
     self.url = url
+    self.since = since
   end
 
   def download
-    uri = URI(url)
+    uri = URI(url + "since=#{since}")
+    puts uri
     res = Net::HTTP.get_response(uri)
+
     
     if(res.code == '200') 
       puts "Downloaded log"
