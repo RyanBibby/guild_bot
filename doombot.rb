@@ -4,19 +4,24 @@ require 'json'
 require 'rubygems'
 require 'bundler/setup'
 require 'net/http'
+require 'httparty'
 
 require_relative 'lib/api/log_downloader'
 require_relative 'lib/api/item'
+require_relative 'lib/api/upgrade'
 
 require_relative 'lib/models/guild_model'
 require_relative 'lib/models/log_item'
 require_relative 'lib/models/motd_log'
 require_relative 'lib/models/treasury_log'
 require_relative 'lib/models/stash_log'
+require_relative 'lib/models/upgrade_log'
+require_relative 'lib/models/upgrade_model'
 
 require_relative 'lib/presentation/motd_poster'
 require_relative 'lib/presentation/discord_poster'
 require_relative 'lib/presentation/treasury_poster'
+require_relative 'lib/presentation/upgrade_poster'
 
 require_relative 'lib/util/settings'
 require_relative 'lib/util/db'
@@ -36,6 +41,10 @@ class DoombotRunner
     TreasuryPoster.new(get_logs($db.last_treasury).treasury_logs).post
   end
 
+  def upgrade
+    UpgradePoster.new(get_logs($db.last_upgrade).upgrade_logs).post
+  end
+
   private 
 
   def get_logs(since)
@@ -48,6 +57,6 @@ class DoombotRunner
   end
 end
 
-if(['motd', 'treasury'].include?(ARGV[0]))
+if(['motd', 'treasury', 'upgrade'].include?(ARGV[0]))
   DoombotRunner.new.send(ARGV[0])
 end
