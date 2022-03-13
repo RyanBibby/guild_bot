@@ -3,7 +3,7 @@ require 'json'
 class Settings < OpenStruct
 
   def self.load
-    JSON.parse(File.read('config/settings.json'), object_class: self)
+    JSON.parse(File.read("#{File.dirname(__FILE__)}/../../config/settings.json"), object_class: self)
   end
 
   def guild_log_url

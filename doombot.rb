@@ -5,8 +5,6 @@ require 'rubygems'
 require 'bundler/setup'
 require 'net/http'
 
-Bundler.require(:default)
-
 require_relative 'lib/api/log_downloader'
 require_relative 'lib/api/item'
 
