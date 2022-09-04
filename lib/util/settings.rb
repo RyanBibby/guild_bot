@@ -9,5 +9,8 @@ class Settings < OpenStruct
   def guild_log_url
     "https://api.guildwars2.com/v2/guild/#{guild_id}/log?access_token=#{api_key}&"
   end
-
+  
+  def guild_treasury_url
+    "https://api.guildwars2.com/v2/guild/#{guild_id}/treasury?access_token=#{api_key}"
+  end
 end

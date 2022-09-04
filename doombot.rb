@@ -9,6 +9,7 @@ require 'httparty'
 require_relative 'lib/api/log_downloader'
 require_relative 'lib/api/item'
 require_relative 'lib/api/upgrade'
+require_relative 'lib/api/treasury_endpoint'
 
 require_relative 'lib/models/guild_model'
 require_relative 'lib/models/log_item'
@@ -38,7 +39,12 @@ class DoombotRunner
   end
 
   def treasury
+    TreasuryEndpoint.new.moo($settings.guild_treasury_url)
     TreasuryPoster.new(get_logs($db.last_treasury).treasury_logs).post
+  end
+  
+  def shov
+
   end
 
   def upgrade
