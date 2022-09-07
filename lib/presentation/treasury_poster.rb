@@ -29,15 +29,15 @@ all_stuff = []
         upgrade_ids = [] 
         required = td.select { |moo| moo["item_id"] == item }.first["needed_by"].inject(0) { |sum, i| upgrade_ids << i["upgrade_id"]; sum + i["count"].to_i }      
         all_stuff << "#{name}:\r\n" + upgrade_ids.map { |up|  "  * " + UpgradeModel.new.from_json(Upgrade.from_id(up)).name }.join("\r\n")
-        "* #{number} x #{name} (#{total} / #{required})"
+        "* #{number} x #{name}"
         else 
-	"* #{number} x #{name} (We're full and no longer need these)"      
+	"* #{number} x #{name}"      
         end 
       end.join("\r\n")
     end.join("\r\n\r\n")
         all_stuff = all_stuff.join("\r\n\r\n")
         uses = "\r\n\r\n** Usage report ** \r\n\r\n" + all_stuff
-        all_items + uses
+        all_items
   end
 
   def id_of_last_log
