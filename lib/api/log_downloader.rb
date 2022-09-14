@@ -1,3 +1,4 @@
+require 'dbm'
 class LogDownloader
 
   attr_accessor :url, :since
@@ -19,6 +20,20 @@ class LogDownloader
         puts "Nothing new"
         return false
       end
+
+      DBM.open "#{$settings.base_path}/data/logs" do |db|
+        log_raw.each do |log|
+          id = log["id"]
+          db[id] = log.to_s
+        end
+      end
+
+      DBM.open "#{$settings.base_path}/data/logs" do |db|
+        db.each do |k,v|
+          puts "Key: #{k} Value: #{v}"
+        end
+      end
+
       File.open("#{$settings.base_path}/data/log.json", "w") { |f| f.write log_raw.to_json }
       return true
     else

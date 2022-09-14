@@ -29,7 +29,7 @@ all_stuff = []
         upgrade_ids = [] 
         required = td.select { |moo| moo["item_id"] == item }.first["needed_by"].inject(0) { |sum, i| upgrade_ids << i["upgrade_id"]; sum + i["count"].to_i }      
         all_stuff << "#{name}:\r\n" + upgrade_ids.map { |up|  "  * " + UpgradeModel.new.from_json(Upgrade.from_id(up)).name }.join("\r\n")
-        "* #{number} x #{name}"
+        "  * #{number} x #{name} (#{total} / #{required})"
         else 
 	"* #{number} x #{name}"      
         end 

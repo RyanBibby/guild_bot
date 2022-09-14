@@ -44,7 +44,6 @@ class DoombotRunner
   end
   
   def shov
-
   end
 
   def upgrade
@@ -63,6 +62,6 @@ class DoombotRunner
   end
 end
 
-if(['motd', 'treasury', 'upgrade'].include?(ARGV[0]))
+if(['motd', 'treasury', 'upgrade', 'shov'].include?(ARGV[0]))
   DoombotRunner.new.send(ARGV[0])
 end
