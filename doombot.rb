@@ -44,6 +44,8 @@ class DoombotRunner
   end
   
   def shov
+    TreasuryEndpoint.new.moo($settings.guild_treasury_url)
+    progress_for(424)
   end
 
   def upgrade
@@ -51,6 +53,25 @@ class DoombotRunner
   end
 
   private 
+
+  def progress_for(item_id)
+    td = JSON.parse File.read("#{$settings.base_path}/data/treasury.json")
+
+    model = UpgradeModel.new.from_json(Upgrade.from_id(item_id))
+    
+    output ="Progess on " + model.name + ":\r\n"
+    model.costs.select { |cost| cost["type"] == "Item"}.each do |item|
+      we_have = td.select { |moo| moo["item_id"] == item["item_id"] }.first["count"]
+
+      if (we_have >= item["count"])
+        output = output + "   * ~~" + item["name"] + " (#{we_have} / #{item["count"]})~~\r\n"
+      else
+        output = output + "   * " + item["name"] + " (#{we_have} / #{item["count"]})\r\n"
+      end
+      
+    end
+    DiscordPoster.new(output).post
+  end
 
   def get_logs(since)
     if(LogDownloader.new($settings.guild_log_url, since).download)
